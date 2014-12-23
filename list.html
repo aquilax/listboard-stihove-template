@@ -1,0 +1,37 @@
+{{define "content"}}
+	<div itemscope="itemscope" itemtype="http://schema.org/Article" class="topic">
+		<div class="article">
+			<h3 itemprop="name" id="{{.List.Id}}">{{.List.Title}} <a class="ref" href="/list/{{.List.Id}}/{{slug .List.Title}}">#{{.List.Id}}</a></h4>
+			<div class="txt" itemprop="articleBody">
+				{{.List.GetRendered}}
+			</div>
+		</div>
+		<div class="meta ar">
+			{{if .List.Tripcode}} [<b>{{.List.Tripcode}}</b>]{{end}}
+			<em>{{ time .List.Created }}</em>
+		</div>
+	</div>
+	{{if .Items}}
+	<ul>
+	{{range $i, $item := .Items}}
+		<li>
+			<div itemscope="itemscope" itemtype="http://schema.org/Article" class="topic">
+				<div class="article">
+					<h4 id="I{{$item.Id}}">{{$item.Title}} <a class="ref" href="/list/{{$.List.Id}}/{{slug $.List.Title}}#I{{$item.Id}}">#{{$item.Id}}</a></h4>
+					<div class="txt" itemprop="articleBody">
+						{{$item.GetRendered}}
+					</div>
+				</div>
+				<div class="meta ar">
+					{{if $item.Tripcode}} [<b>{{$item.Tripcode}}</b>]{{end}}
+					[ <a href="/vote/{{$item.Id}}/{{slug $item.Title}}#post">{{lang "vote"}}</a> ]
+					{{lang "rating"}}: <b>{{$item.Vote}}</b> |
+					<em>{{ time $item.Created }}</em>
+				</div>
+			</div>
+		</li>
+	{{end}}
+	</ul>
+	{{end}}
+	{{template "form" .}}
+{{end}}

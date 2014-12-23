@@ -1,0 +1,20 @@
+{{define "content"}}
+	<table class="tbl">
+		<thead>
+			<tr>
+				<th>{{lang "Name"}}</th>
+				<th style="width:50px;text-align:right">{{lang "Votes"}}</th>
+				<th style="width:150px;text-align:right">{{lang "Last updated"}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{range $i, $item := .Lists}}
+			{{ if mod $i 2 }}<tr>{{ else }}<tr class="e">{{ end }}
+				<td><a href="list/{{$item.Id}}/{{slug $item.Title}}" class="title">{{$item.Title}}</a></td>
+				<td class="ar">{{$item.Vote}}</td>
+				<td class="ar">{{ time $item.Updated }}</td>
+			</tr>
+			{{end}}
+		</tbody>
+	</table>
+{{end}}
